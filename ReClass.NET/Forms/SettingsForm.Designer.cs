@@ -128,6 +128,7 @@ namespace ReClassNET.Forms
             this.int16TypeTextBox = new System.Windows.Forms.TextBox();
             this.int8SettingsLabel = new System.Windows.Forms.Label();
             this.int8TypeTextBox = new System.Windows.Forms.TextBox();
+            this.darkModeCheckBox = new System.Windows.Forms.CheckBox(); // Added
             this.bannerBox = new ReClassNET.Controls.BannerBox();
             this.utf32TextSettingsLabel = new System.Windows.Forms.Label();
             this.utf32TextTypeTextBox = new System.Windows.Forms.TextBox();
@@ -155,6 +156,7 @@ namespace ReClassNET.Forms
             // 
             // generalSettingsTabPage
             // 
+            this.generalSettingsTabPage.Controls.Add(this.darkModeCheckBox); // Added
             this.generalSettingsTabPage.Controls.Add(this.fileAssociationGroupBox);
             this.generalSettingsTabPage.Controls.Add(this.commentsGroupBox);
             this.generalSettingsTabPage.Controls.Add(this.displayGroupBox);
@@ -172,10 +174,10 @@ namespace ReClassNET.Forms
             this.fileAssociationGroupBox.Controls.Add(this.removeAssociationButton);
             this.fileAssociationGroupBox.Controls.Add(this.createAssociationButton);
             this.fileAssociationGroupBox.Controls.Add(this.associationInfoLabel);
-            this.fileAssociationGroupBox.Location = new System.Drawing.Point(6, 231);
+            this.fileAssociationGroupBox.Location = new System.Drawing.Point(6, 254); // Adjusted Y: 231 + 23 = 254
             this.fileAssociationGroupBox.Name = "fileAssociationGroupBox";
             this.fileAssociationGroupBox.Size = new System.Drawing.Size(542, 85);
-            this.fileAssociationGroupBox.TabIndex = 4;
+            this.fileAssociationGroupBox.TabIndex = 5; // Incremented
             this.fileAssociationGroupBox.TabStop = false;
             this.fileAssociationGroupBox.Text = "RCNET File Association";
             // 
@@ -219,10 +221,10 @@ namespace ReClassNET.Forms
             this.commentsGroupBox.Controls.Add(this.showPointerCheckBox);
             this.commentsGroupBox.Controls.Add(this.showIntegerCheckBox);
             this.commentsGroupBox.Controls.Add(this.showFloatCheckBox);
-            this.commentsGroupBox.Location = new System.Drawing.Point(6, 39);
+            this.commentsGroupBox.Location = new System.Drawing.Point(6, 62); // Adjusted Y: 39 + 23 = 62
             this.commentsGroupBox.Name = "commentsGroupBox";
             this.commentsGroupBox.Size = new System.Drawing.Size(265, 186);
-            this.commentsGroupBox.TabIndex = 3;
+            this.commentsGroupBox.TabIndex = 4; // Incremented
             this.commentsGroupBox.TabStop = false;
             this.commentsGroupBox.Text = "Node Comments";
             // 
@@ -304,10 +306,10 @@ namespace ReClassNET.Forms
             this.displayGroupBox.Controls.Add(this.showTextCheckBox);
             this.displayGroupBox.Controls.Add(this.showNodeOffsetCheckBox);
             this.displayGroupBox.Controls.Add(this.showNodeAddressCheckBox);
-            this.displayGroupBox.Location = new System.Drawing.Point(283, 39);
+            this.displayGroupBox.Location = new System.Drawing.Point(283, 62); // Adjusted Y: 39 + 23 = 62
             this.displayGroupBox.Name = "displayGroupBox";
             this.displayGroupBox.Size = new System.Drawing.Size(265, 160);
-            this.displayGroupBox.TabIndex = 2;
+            this.displayGroupBox.TabIndex = 3; // Incremented
             this.displayGroupBox.TabStop = false;
             this.displayGroupBox.Text = "Display";
             // 
@@ -380,6 +382,16 @@ namespace ReClassNET.Forms
             this.stayOnTopCheckBox.TabIndex = 1;
             this.stayOnTopCheckBox.Text = "Force ReClass.NET to stay on top";
             this.stayOnTopCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // darkModeCheckBox
+            // 
+            this.darkModeCheckBox.AutoSize = true;
+            this.darkModeCheckBox.Location = new System.Drawing.Point(6, 29); // Y = 6 (stayOnTop) + 17 (stayOnTop height) + 6 (spacing) = 29
+            this.darkModeCheckBox.Name = "darkModeCheckBox";
+            this.darkModeCheckBox.Size = new System.Drawing.Size(118, 17);
+            this.darkModeCheckBox.TabIndex = 2; // After stayOnTopCheckBox
+            this.darkModeCheckBox.Text = "Enable Dark Mode";
+            this.darkModeCheckBox.UseVisualStyleBackColor = true;
             // 
             // colorsSettingTabPage
             // 
@@ -1247,5 +1259,6 @@ namespace ReClassNET.Forms
 		private System.Windows.Forms.TextBox nintTypeTextBox;
 		private System.Windows.Forms.Label utf32TextSettingsLabel;
 		private System.Windows.Forms.TextBox utf32TextTypeTextBox;
+        private System.Windows.Forms.CheckBox darkModeCheckBox;
 	}
 }

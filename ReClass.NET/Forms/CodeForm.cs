@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing; // Added for Color
 using ColorCode;
 using ColorCode.Parsing;
 using ReClassNET.CodeGenerator;
@@ -19,6 +20,8 @@ namespace ReClassNET.Forms
 {
 	public partial class CodeForm : IconForm
 	{
+		private bool isApplyingTheme = false; // To prevent re-entrancy
+
 		public CodeForm(ICodeGenerator generator, IReadOnlyList<ClassNode> classes, IReadOnlyList<EnumDescription> enums, ILogger logger)
 		{
 			Contract.Requires(generator != null);
@@ -44,6 +47,13 @@ namespace ReClassNET.Forms
 			}
 
 			codeRichTextBox.Rtf = buffer.ToString();
+
+			this.Activated += CodeForm_Activated;
+		}
+
+		private void CodeForm_Activated(object sender, EventArgs e)
+		{
+			ApplyTheme();
 		}
 
 		protected override void OnLoad(EventArgs e)
@@ -51,6 +61,64 @@ namespace ReClassNET.Forms
 			base.OnLoad(e);
 
 			GlobalWindowManager.AddWindow(this);
+
+			ApplyTheme();
+		}
+
+		private void ApplyTheme()
+		{
+			if (isApplyingTheme) return;
+			isApplyingTheme = true;
+
+			try
+			{
+				var foreColor = Program.Settings.TextColor;
+				var backColor = Program.Settings.BackgroundColor;
+				// For RichTextBox, the selected color might be too dark if it's used as a general input field background.
+				// Sticking to the main BackgroundColor for now, as RTF handles its own foreground colors.
+				var rtbBackColor = Program.Settings.BackgroundColor; 
+
+				this.ForeColor = foreColor;
+				this.BackColor = backColor;
+
+				UpdateControlTheme(this, foreColor, backColor, rtbBackColor); // Pass rtbBackColor for specific use
+
+				// Specific controls
+				codeRichTextBox.BackColor = rtbBackColor; 
+				codeRichTextBox.ForeColor = foreColor; // Default text color if no RTF styling applies
+
+				// BannerBox theming
+				bannerBox.BackColor = backColor;
+				bannerBox.ForeColor = foreColor;
+				bannerBox.Invalidate();
+			}
+			finally
+			{
+				isApplyingTheme = false;
+			}
+		}
+
+		private void UpdateControlTheme(Control parentControl, Color foreColor, Color backColor, Color specificBackColor)
+		{
+			foreach (Control control in parentControl.Controls)
+			{
+				if (control is BannerBox) continue;
+
+				control.ForeColor = foreColor;
+				control.BackColor = backColor;
+
+				if (control is RichTextBox) // Apply specificBackColor to RichTextBox
+				{
+					control.BackColor = specificBackColor;
+				}
+				// No other specific input controls like TextBox, ListBox on this form from designer.
+				// Buttons will take general ForeColor/BackColor.
+				
+				if (control.HasChildren)
+				{
+					UpdateControlTheme(control, foreColor, backColor, specificBackColor);
+				}
+			}
 		}
 
 		protected override void OnFormClosed(FormClosedEventArgs e)

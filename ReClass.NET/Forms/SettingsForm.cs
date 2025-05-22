@@ -7,6 +7,7 @@ using ReClassNET.Native;
 using ReClassNET.Project;
 using ReClassNET.UI;
 using ReClassNET.Util;
+using System.Drawing; // Required for Color
 
 namespace ReClassNET.Forms
 {
@@ -40,6 +41,9 @@ namespace ReClassNET.Forms
 			SetGeneralBindings();
 			SetColorBindings();
 			SetTypeDefinitionBindings();
+
+			// Apply theme after bindings are set.
+			ApplyTheme();
 
 			if (NativeMethods.IsUnix())
 			{
@@ -106,6 +110,97 @@ namespace ReClassNET.Forms
 			SetBinding(showPluginInfoCheckBox, nameof(CheckBox.Checked), settings, nameof(Settings.ShowCommentPluginInfo));
 			SetBinding(runAsAdminCheckBox, nameof(CheckBox.Checked), settings, nameof(Settings.RunAsAdmin));
 			SetBinding(randomizeWindowTitleCheckBox, nameof(CheckBox.Checked), settings, nameof(Settings.RandomizeWindowTitle));
+
+			// Dark Mode CheckBox Binding
+			SetBinding(darkModeCheckBox, nameof(CheckBox.Checked), settings, nameof(Settings.EnableDarkMode));
+			darkModeCheckBox.CheckedChanged += (_, _2) => ApplyTheme();
+		}
+
+		private void ApplyTheme()
+		{
+			// Determine colors based on dark mode setting
+			var foreColor = settings.EnableDarkMode ? settings.DarkTextColor : SystemColors.ControlText;
+			var backColor = settings.EnableDarkMode ? settings.DarkBackgroundColor : SystemColors.Control;
+
+			this.ForeColor = foreColor;
+			this.BackColor = backColor;
+
+			// Recursively update all child controls
+			UpdateControlTheme(this);
+
+			// Special handling for specific controls if needed
+			settingsTabControl.ForeColor = foreColor;
+			settingsTabControl.BackColor = backColor; // TabControl itself might not change much
+
+			foreach (TabPage tabPage in settingsTabControl.TabPages)
+			{
+				tabPage.ForeColor = foreColor;
+				tabPage.BackColor = backColor;
+				UpdateControlTheme(tabPage); // Apply to controls within each tab page
+			}
+
+			// BannerBox - Assuming it has public ForeColor/BackColor properties to set.
+			// If BannerBox internally uses specific colors, it might need its own dark mode logic.
+			bannerBox.ForeColor = foreColor;
+			bannerBox.BackColor = settings.EnableDarkMode ? settings.DarkSelectedColor : SystemColors.Control; // Example: using selected color for banner bg
+		}
+
+		private void UpdateControlTheme(Control parentControl)
+		{
+			var foreColor = settings.EnableDarkMode ? settings.DarkTextColor : SystemColors.ControlText;
+			var backColor = settings.EnableDarkMode ? settings.DarkBackgroundColor : SystemColors.Control;
+			var contrastingBackColor = settings.EnableDarkMode ? settings.DarkSelectedColor : SystemColors.Window; // For TextBox, etc.
+
+			foreach (Control control in parentControl.Controls)
+			{
+				control.ForeColor = foreColor;
+				control.BackColor = backColor;
+
+				if (control is TextBox || control is ComboBox || control is ListBox)
+				{
+					control.BackColor = contrastingBackColor; // Use a contrasting background for input fields
+				}
+				else if (control is ButtonBase) // Buttons often use system styling
+				{
+					// Buttons might not fully support custom BackColor/ForeColor on all OS versions or themes.
+					// We can try, but it might not have the desired effect.
+					control.ForeColor = foreColor;
+					// control.BackColor = backColor; // Often ignored for buttons
+				}
+				else if (control is CheckBox)
+				{
+					// CheckBox text color is handled by ForeColor, background is usually transparent or uses parent's.
+				}
+				else if (control is GroupBox groupBox)
+				{
+					groupBox.ForeColor = foreColor; // GroupBox title color
+					UpdateControlTheme(groupBox); // Recursively update controls within the GroupBox
+				}
+				else if (control is Panel panel)
+				{
+					UpdateControlTheme(panel); // Recursively update controls within the Panel
+				}
+				else if (control is TabControl tabControl)
+				{
+					UpdateControlTheme(tabControl); // Apply to the TabControl itself
+					foreach (TabPage tabPage in tabControl.TabPages)
+					{
+						tabPage.ForeColor = foreColor;
+						tabPage.BackColor = backColor;
+						UpdateControlTheme(tabPage); // Apply to controls within each tab page
+					}
+				}
+				else if (control is ColorBox colorBox) // Assuming ColorBox is a custom control
+				{
+					// ColorBox might need specific properties if Fore/Back color don't cover its display
+					// For now, apply standard colors. It might have its own drawing logic.
+					colorBox.BackColor = backColor;
+				}
+				else if (control.HasChildren && !(control is TabPage || control is TextBoxBase)) // Avoid re-recursing on TabPage children here as it's handled above / TextBox
+				{
+					UpdateControlTheme(control);
+				}
+			}
 		}
 
 		private void SetColorBindings()

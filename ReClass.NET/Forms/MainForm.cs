@@ -29,6 +29,7 @@ namespace ReClassNET.Forms
 	{
 		private readonly PluginManager pluginManager;
 		private readonly IconProvider iconProvider = new IconProvider();
+		private bool isApplyingTheme = false; // To prevent re-entrancy in ApplyTheme
 
 		private ReClassNetProject currentProject;
 		public ReClassNetProject CurrentProject => currentProject;
@@ -95,6 +96,8 @@ namespace ReClassNET.Forms
 			};
 
 			pluginManager = new PluginManager(new DefaultPluginHost(this, Program.RemoteProcess, Program.Logger));
+
+			this.Activated += MainForm_Activated; // Subscribe to Activated event
 		}
 
 		protected override void OnLoad(EventArgs e)
@@ -135,7 +138,130 @@ namespace ReClassNET.Forms
 			{
 				AttachToProcess(Program.CommandLineArgs[Constants.CommandLineOptions.AttachTo]);
 			}
+
+			ApplyTheme(); // Initial theme application
 		}
+
+		private void MainForm_Activated(object sender, EventArgs e)
+		{
+			ApplyTheme(); // Re-apply theme when form is activated
+		}
+
+		private void ApplyTheme()
+		{
+			if (isApplyingTheme) return; // Prevent re-entrancy
+			isApplyingTheme = true;
+
+			try
+			{
+				var foreColor = Program.Settings.TextColor;
+				var backColor = Program.Settings.BackgroundColor;
+				var backColorSelected = Program.Settings.SelectedColor; // For input-like backgrounds
+
+				this.ForeColor = foreColor;
+				this.BackColor = backColor;
+
+				// Apply to specific top-level controls and containers first
+				mainMenuStrip.ForeColor = foreColor; // Text color for menu items
+				mainMenuStrip.BackColor = backColor; // Background of the menu bar itself
+				mainMenuStrip.Invalidate();
+
+				toolStrip.ForeColor = foreColor; // Text/icon color for toolstrip items
+				toolStrip.BackColor = backColor; // Background of the toolstrip bar
+				toolStrip.Invalidate();
+
+				statusStrip.ForeColor = foreColor;
+				statusStrip.BackColor = backColor;
+				foreach (ToolStripItem item in statusStrip.Items)
+				{
+					item.ForeColor = foreColor;
+				}
+				statusStrip.Invalidate();
+
+				splitContainer.BackColor = backColor;
+				splitContainer.Panel1.BackColor = backColor;
+				splitContainer.Panel2.BackColor = backColor;
+
+				// Apply to child controls recursively
+				UpdateControlTheme(this, foreColor, backColor, backColorSelected);
+
+				// Invalidate custom controls that depend on Program.Settings in their paint/draw logic
+				memoryViewControl.Invalidate();
+				projectView.Invalidate(); // ProjectView might need more specific theming if Back/ForeColor isn't enough
+			}
+			finally
+			{
+				isApplyingTheme = false;
+			}
+		}
+
+		private void UpdateControlTheme(Control parentControl, Color foreColor, Color backColor, Color backColorSelected)
+		{
+			foreach (Control control in parentControl.Controls)
+			{
+				control.ForeColor = foreColor;
+				control.BackColor = backColor;
+
+				if (control is TextBoxBase || control is ListBox || control is ComboBox)
+				{
+					control.BackColor = backColorSelected;
+				}
+				else if (control is TreeView treeView)
+				{
+					treeView.BackColor = backColorSelected; // Typically tree backgrounds are different
+					treeView.LineColor = foreColor; // Color for the tree lines
+				}
+				else if (control is ListView listView)
+				{
+					listView.BackColor = backColorSelected; // Typically list backgrounds are different
+				}
+				else if (control is ButtonBase)
+				{
+					// Buttons are tricky with WinForms theming. ForeColor might work.
+					// BackColor often doesn't unless FlatStyle is changed, which can alter appearance significantly.
+					// For now, just ForeColor.
+				}
+				else if (control is SplitContainer childSplitContainer)
+				{
+					childSplitContainer.BackColor = backColor;
+					childSplitContainer.Panel1.BackColor = backColor;
+					childSplitContainer.Panel2.BackColor = backColor;
+					UpdateControlTheme(childSplitContainer.Panel1, foreColor, backColor, backColorSelected);
+					UpdateControlTheme(childSplitContainer.Panel2, foreColor, backColor, backColorSelected);
+					continue; // Skip default recursion for children as we handled its panels
+				}
+				else if (control is DataGridView dgv)
+				{
+					dgv.BackgroundColor = backColor;
+					dgv.GridColor = foreColor; // Color of the grid lines
+
+					dgv.DefaultCellStyle.BackColor = backColorSelected;
+					dgv.DefaultCellStyle.ForeColor = foreColor;
+					dgv.DefaultCellStyle.SelectionBackColor = Program.Settings.HighlightChangedValues ? Program.Settings.AddressColor : backColor; // Example
+					dgv.DefaultCellStyle.SelectionForeColor = foreColor;
+
+					dgv.ColumnHeadersDefaultCellStyle.BackColor = backColor;
+					dgv.ColumnHeadersDefaultCellStyle.ForeColor = foreColor;
+					dgv.EnableHeadersVisualStyles = false; // Important for custom header colors
+
+					dgv.RowHeadersDefaultCellStyle.BackColor = backColor;
+					dgv.RowHeadersDefaultCellStyle.ForeColor = foreColor;
+				}
+				// Skip ToolStrip and MenuStrip as they are handled by CustomToolStripProfessionalRenderer
+				else if (control is ToolStrip || control is MenuStrip)
+				{
+					control.Invalidate(); // Ensure they redraw
+					continue; 
+				}
+
+
+				if (control.HasChildren)
+				{
+					UpdateControlTheme(control, foreColor, backColor, backColorSelected);
+				}
+			}
+		}
+
 
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
@@ -1043,7 +1169,9 @@ namespace ReClassNET.Forms
 				}
 				memoryViewBuffer.UpdateFrom(process, address);
 
-				args.Settings = Program.Settings;
+				// ApplyTheme might have already set general colors, but DrawContext is specific
+				// Ensure the settings object passed here is up-to-date.
+				args.Settings = Program.Settings; 
 				args.IconProvider = iconProvider;
 				args.Process = process;
 				args.Memory = memoryViewBuffer;
