@@ -45,6 +45,10 @@ namespace ReClassNET.Forms
             this.showIntegerCheckBox = new System.Windows.Forms.CheckBox();
             this.showFloatCheckBox = new System.Windows.Forms.CheckBox();
             this.displayGroupBox = new System.Windows.Forms.GroupBox();
+            this.customNameTextBox = new System.Windows.Forms.TextBox();
+            this.labelCustomName = new System.Windows.Forms.Label();
+            this.displayModeComboBox = new System.Windows.Forms.ComboBox();
+            this.labelDisplayMode = new System.Windows.Forms.Label();
             this.randomizeWindowTitleCheckBox = new System.Windows.Forms.CheckBox();
             this.runAsAdminCheckBox = new System.Windows.Forms.CheckBox();
             this.highlightChangedValuesCheckBox = new System.Windows.Forms.CheckBox();
@@ -298,6 +302,10 @@ namespace ReClassNET.Forms
             // 
             // displayGroupBox
             // 
+            this.displayGroupBox.Controls.Add(this.customNameTextBox);
+            this.displayGroupBox.Controls.Add(this.labelCustomName);
+            this.displayGroupBox.Controls.Add(this.displayModeComboBox);
+            this.displayGroupBox.Controls.Add(this.labelDisplayMode);
             this.displayGroupBox.Controls.Add(this.randomizeWindowTitleCheckBox);
             this.displayGroupBox.Controls.Add(this.runAsAdminCheckBox);
             this.displayGroupBox.Controls.Add(this.highlightChangedValuesCheckBox);
@@ -306,11 +314,45 @@ namespace ReClassNET.Forms
             this.displayGroupBox.Controls.Add(this.showNodeAddressCheckBox);
             this.displayGroupBox.Location = new System.Drawing.Point(283, 39);
             this.displayGroupBox.Name = "displayGroupBox";
-            this.displayGroupBox.Size = new System.Drawing.Size(265, 160);
+            this.displayGroupBox.Size = new System.Drawing.Size(265, 208);
             this.displayGroupBox.TabIndex = 2;
             this.displayGroupBox.TabStop = false;
             this.displayGroupBox.Text = "Display";
             // 
+            // customNameTextBox
+            //
+            this.customNameTextBox.Location = new System.Drawing.Point(99, 182);
+            this.customNameTextBox.Name = "customNameTextBox";
+            this.customNameTextBox.Size = new System.Drawing.Size(159, 20);
+            this.customNameTextBox.TabIndex = 9;
+            //
+            // labelCustomName
+            //
+            this.labelCustomName.AutoSize = true;
+            this.labelCustomName.Location = new System.Drawing.Point(7, 185);
+            this.labelCustomName.Name = "labelCustomName";
+            this.labelCustomName.Size = new System.Drawing.Size(75, 13);
+            this.labelCustomName.TabIndex = 8;
+            this.labelCustomName.Text = "Custom Name:";
+            //
+            // displayModeComboBox
+            //
+            this.displayModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.displayModeComboBox.FormattingEnabled = true;
+            this.displayModeComboBox.Location = new System.Drawing.Point(99, 157);
+            this.displayModeComboBox.Name = "displayModeComboBox";
+            this.displayModeComboBox.Size = new System.Drawing.Size(160, 21);
+            this.displayModeComboBox.TabIndex = 7;
+            //
+            // labelDisplayMode
+            //
+            this.labelDisplayMode.AutoSize = true;
+            this.labelDisplayMode.Location = new System.Drawing.Point(7, 160);
+            this.labelDisplayMode.Name = "labelDisplayMode";
+            this.labelDisplayMode.Size = new System.Drawing.Size(74, 13);
+            this.labelDisplayMode.TabIndex = 6;
+            this.labelDisplayMode.Text = "Display Mode:";
+            //
             // randomizeWindowTitleCheckBox
             // 
             this.randomizeWindowTitleCheckBox.AutoSize = true;
@@ -1247,5 +1289,9 @@ namespace ReClassNET.Forms
 		private System.Windows.Forms.TextBox nintTypeTextBox;
 		private System.Windows.Forms.Label utf32TextSettingsLabel;
 		private System.Windows.Forms.TextBox utf32TextTypeTextBox;
+		private System.Windows.Forms.TextBox customNameTextBox;
+		private System.Windows.Forms.Label labelCustomName;
+		private System.Windows.Forms.ComboBox displayModeComboBox;
+		private System.Windows.Forms.Label labelDisplayMode;
 	}
 }

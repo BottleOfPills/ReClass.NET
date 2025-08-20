@@ -12,8 +12,11 @@ namespace ReClassNET.Forms
 			InitializeComponent();
 
 			bannerBox.Icon = Properties.Resources.ReClassNet.ToBitmap();
-			bannerBox.Title = Constants.ApplicationName;
+			bannerBox.Title = Program.Settings.CustomName;
 			bannerBox.Text = $"Version: {Constants.ApplicationVersion}";
+
+			infoLabel.Text = $"This is a port of {Program.Settings.CustomName} to the .NET platform with additional features.\r\n{Program.Settings.CustomName} was originally written by DrUnKeN ChEeTaH.";
+			Text = $"{Program.Settings.CustomName}.NET - Info";
 
 			platformValueLabel.Text = Constants.Platform;
 			buildTimeValueLabel.Text = Properties.Resources.BuildDate;

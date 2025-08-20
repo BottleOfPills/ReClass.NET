@@ -61,7 +61,7 @@ namespace ReClassNET.Forms
 
 		private void UpdateWindowTitle(string extra = null)
 		{
-			var title = $"{(Program.Settings.RandomizeWindowTitle ? Utils.RandomString(Program.GlobalRandom.Next(15, 20)) : Constants.ApplicationName)} ({Constants.Platform})";
+			var title = $"{(Program.Settings.RandomizeWindowTitle ? Utils.RandomString(Program.GlobalRandom.Next(15, 20)) : Program.Settings.CustomName)} ({Constants.Platform})";
 			if (!string.IsNullOrEmpty(extra))
 			{
 				title += $" - {extra}";
@@ -1043,7 +1043,7 @@ namespace ReClassNET.Forms
 				}
 				memoryViewBuffer.UpdateFrom(process, address);
 
-				args.Settings = Program.Settings;
+				args.Settings = ThemeService.Current;
 				args.IconProvider = iconProvider;
 				args.Process = process;
 				args.Memory = memoryViewBuffer;

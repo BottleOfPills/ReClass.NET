@@ -27,6 +27,10 @@ namespace ReClassNET.Forms
 
 			InitializeComponent();
 
+			associationInfoLabel.Text = $"RCNET files can be associated with {Program.Settings.CustomName}. When you double-click a RCNET file, they will automatically be opened by {Program.Settings.CustomName}.";
+			stayOnTopCheckBox.Text = $"Force {Program.Settings.CustomName} to stay on top";
+			Text = $"{Program.Settings.CustomName} - Settings";
+
 			var imageList = new ImageList();
 			imageList.Images.Add(Properties.Resources.B16x16_Gear);
 			imageList.Images.Add(Properties.Resources.B16x16_Color_Wheel);
@@ -104,8 +108,19 @@ namespace ReClassNET.Forms
 			SetBinding(showSymbolsCheckBox, nameof(CheckBox.Checked), settings, nameof(Settings.ShowCommentSymbol));
 			SetBinding(showStringCheckBox, nameof(CheckBox.Checked), settings, nameof(Settings.ShowCommentString));
 			SetBinding(showPluginInfoCheckBox, nameof(CheckBox.Checked), settings, nameof(Settings.ShowCommentPluginInfo));
+
 			SetBinding(runAsAdminCheckBox, nameof(CheckBox.Checked), settings, nameof(Settings.RunAsAdmin));
 			SetBinding(randomizeWindowTitleCheckBox, nameof(CheckBox.Checked), settings, nameof(Settings.RandomizeWindowTitle));
+
+			displayModeComboBox.DataSource = Enum.GetValues(typeof(DisplayMode));
+			SetBinding(displayModeComboBox, nameof(ComboBox.SelectedValue), settings, nameof(Settings.DisplayMode));
+			displayModeComboBox.SelectedIndexChanged += (s, e) =>
+			{
+				ThemeService.SetTheme((DisplayMode)displayModeComboBox.SelectedValue);
+				GlobalWindowManager.Windows.ForEach(w => w.Invalidate(true));
+			};
+
+			SetBinding(customNameTextBox, nameof(TextBox.Text), settings, nameof(Settings.CustomName));
 		}
 
 		private void SetColorBindings()

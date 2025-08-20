@@ -79,7 +79,7 @@ namespace ReClassNET.Nodes
 			if (LevelsOpen[context.Level])
 			{
 				var innerContext = context.Clone();
-				innerContext.Settings = Program.Settings.Clone();
+				innerContext.Settings = ThemeService.Current.Clone();
 				innerContext.Settings.ShowNodeAddress = false;
 				innerContext.Address = context.Address + Offset;
 				innerContext.Memory = context.Memory.Clone();

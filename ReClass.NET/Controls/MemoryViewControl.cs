@@ -106,7 +106,7 @@ namespace ReClassNET.Controls
 
 			hotSpots.Clear();
 
-			using (var brush = new SolidBrush(Program.Settings.BackgroundColor))
+			using (var brush = new SolidBrush(ThemeService.Current.BackgroundColor))
 			{
 				e.Graphics.FillRectangle(brush, ClientRectangle);
 			}

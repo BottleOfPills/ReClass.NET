@@ -44,7 +44,7 @@ namespace ReClassNET.Controls
 
 			if (Visible)
 			{
-				BackColor = Program.Settings.BackgroundColor;
+				BackColor = ThemeService.Current.BackgroundColor;
 
 				if (currentHotSpot != null)
 				{

@@ -114,7 +114,7 @@ namespace ReClassNET.Controls
 				DrawContext.HotSpots.Clear();
 
 				// Some settings are not usefull for the preview.
-				DrawContext.Settings = Program.Settings.Clone();
+				DrawContext.Settings = ThemeService.Current.Clone();
 				DrawContext.Settings.ShowNodeAddress = false;
 
 				DrawContext.Graphics = e.Graphics;

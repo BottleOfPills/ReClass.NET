@@ -4,6 +4,12 @@ using ReClassNET.Util;
 
 namespace ReClassNET
 {
+	public enum DisplayMode
+	{
+		Light,
+		Dark
+	}
+
 	public class Settings
 	{
 		// Application Settings
@@ -15,6 +21,10 @@ namespace ReClassNET
 		public bool RunAsAdmin { get; set; } = false;
 
 		public bool RandomizeWindowTitle { get; set; } = false;
+
+		public DisplayMode DisplayMode { get; set; } = DisplayMode.Light;
+
+		public string CustomName { get; set; } = "ReClass";
 
 		// Node Drawing Settings
 

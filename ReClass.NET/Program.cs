@@ -66,6 +66,7 @@ namespace ReClassNET
 			CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 
 			Settings = SettingsSerializer.Load();
+			ThemeService.SetTheme(Settings.DisplayMode);
 			Logger = new GuiLogger();
 
 			if (!NativeMethods.IsUnix() && Settings.RunAsAdmin && !WinUtil.IsAdministrator)
