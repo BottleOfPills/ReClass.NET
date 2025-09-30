@@ -419,13 +419,6 @@ namespace ReClassNET.Forms
 			ShowCodeGeneratorForm(new CSharpCodeGenerator());
 		}
 
-		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			using var af = new AboutForm();
-
-			af.ShowDialog();
-		}
-
 		#endregion
 
 		#region Toolstrip

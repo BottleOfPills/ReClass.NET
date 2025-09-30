@@ -121,7 +121,7 @@ Settings
 ![](https://abload.de/img/settings8sz4b.jpg)
 
 ## Authors / Special Thanks
-- [KN4CK3R](https://github.com/KN4CK3R)
+-
 - DrUnKeN ChEeTaH
 - P47R!CK
 - DogMatt

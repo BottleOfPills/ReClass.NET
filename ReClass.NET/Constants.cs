@@ -10,8 +10,6 @@
 
 		public const string LauncherExecutableName = ApplicationName + "_Launcher.exe";
 
-		public const string Author = "KN4CK3R";
-
 		public const string HomepageUrl = "https://github.com/ReClassNET/ReClass.NET";
 
 		public const string HelpUrl = "https://github.com/ReClassNET/ReClass.NET/issues";

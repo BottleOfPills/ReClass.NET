@@ -48,7 +48,7 @@ namespace ReClassNET.CodeGenerator
 			using var sw = new StringWriter();
 			using var iw = new IndentedTextWriter(sw, "\t");
 
-			iw.WriteLine($"// Created with {Constants.ApplicationName} {Constants.ApplicationVersion} by {Constants.Author}");
+			iw.WriteLine($"// Created with {Constants.ApplicationName} {Constants.ApplicationVersion}");
 			iw.WriteLine();
 			iw.WriteLine("// Warning: The C# code generator doesn't support all node types!");
 			iw.WriteLine();

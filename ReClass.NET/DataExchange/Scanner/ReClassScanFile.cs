@@ -125,7 +125,7 @@ namespace ReClassNET.DataExchange.Scanner
 			using var entryStream = dataEntry.Open();
 
 			var document = new XDocument(
-				new XComment($"{Constants.ApplicationName} Scanner {Constants.ApplicationVersion} by {Constants.Author}"),
+				new XComment($"{Constants.ApplicationName} Scanner {Constants.ApplicationVersion}"),
 				new XComment($"Website: {Constants.HomepageUrl}"),
 				new XElement(
 					XmlRootElement,

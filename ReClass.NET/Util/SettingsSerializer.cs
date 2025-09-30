@@ -98,7 +98,7 @@ namespace ReClassNET.Util
 			using var sw = new StreamWriter(path);
 
 			var document = new XDocument(
-				new XComment($"{Constants.ApplicationName} {Constants.ApplicationVersion} by {Constants.Author}"),
+				new XComment($"{Constants.ApplicationName} {Constants.ApplicationVersion}"),
 				new XComment($"Website: {Constants.HomepageUrl}"),
 				new XElement(
 					XmlRootElement,

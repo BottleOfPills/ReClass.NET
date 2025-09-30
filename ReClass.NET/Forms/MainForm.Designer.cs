@@ -1044,8 +1044,7 @@ namespace ReClassNET.Forms
 			this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.processToolStripMenuItem,
-            this.projectToolStripMenuItem,
-            this.helpToolStripMenuItem});
+			this.projectToolStripMenuItem});
 			this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.mainMenuStrip.Name = "mainMenuStrip";
 			this.mainMenuStrip.Size = new System.Drawing.Size(1141, 24);
@@ -1350,22 +1349,6 @@ namespace ReClassNET.Forms
 			this.generateCSharpCodeToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
 			this.generateCSharpCodeToolStripMenuItem.Text = "Generate C# Code...";
 			this.generateCSharpCodeToolStripMenuItem.Click += new System.EventHandler(this.generateCSharpCodeToolStripMenuItem_Click);
-			// 
-			// helpToolStripMenuItem
-			// 
-			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-			this.helpToolStripMenuItem.Text = "Help";
-			// 
-			// aboutToolStripMenuItem
-			// 
-			this.aboutToolStripMenuItem.Image = global::ReClassNET.Properties.Resources.B16x16_Information;
-			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-			this.aboutToolStripMenuItem.Text = "About...";
-			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
