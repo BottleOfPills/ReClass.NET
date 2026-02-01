@@ -2,7 +2,7 @@ namespace ReClassNET
 {
 	public class Constants
 	{
-		public const string ApplicationName = "MemoryEditor";
+		public const string ApplicationName = "DataProcessor";
 
 		public const string ApplicationExecutableName = ApplicationName + ".exe";
 

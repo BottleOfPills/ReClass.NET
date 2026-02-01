@@ -2,11 +2,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("MemoryEditor Tests")]
+[assembly: AssemblyTitle("DataProcessor Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Anonymous")]
-[assembly: AssemblyProduct("MemoryEditor Tests")]
+[assembly: AssemblyProduct("DataProcessor Tests")]
 [assembly: AssemblyCopyright("Anonymous")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
