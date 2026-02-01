@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ReClassNET</RootNamespace>
-    <AssemblyName>ReClass.NET</AssemblyName>
+    <AssemblyName>MemoryEditor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -106,7 +106,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Icon\ReClassNet.ico</ApplicationIcon>
+    <!-- <ApplicationIcon>Resources\Icon\ReClassNet.ico</ApplicationIcon> -->
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>

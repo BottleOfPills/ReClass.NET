@@ -1,10 +1,10 @@
-﻿namespace ReClassNET.DataExchange.ReClass
+namespace ReClassNET.DataExchange.ReClass
 {
 	public partial class ReClassNetFile
 	{
-		public const string FormatName = "ReClass.NET File";
-		public const string FileExtension = ".rcnet";
-		public const string FileExtensionId = "rcnetfile";
+		public const string FormatName = "MemoryEditor File";
+		public const string FileExtension = ".memedit";
+		public const string FileExtensionId = "memeditfile";
 
 		private const uint FileVersion = 0x00010001;
 		private const uint FileVersionCriticalMask = 0xFFFF0000;
@@ -13,7 +13,7 @@
 
 		private const string SerializationClassName = "__Serialization_Class__";
 
-		public const string XmlRootElement = "reclass";
+		public const string XmlRootElement = "memedit";
 		public const string XmlCustomDataElement = "custom_data";
 		public const string XmlTypeMappingElement = "type_mapping";
 		public const string XmlEnumsElement = "enums";
