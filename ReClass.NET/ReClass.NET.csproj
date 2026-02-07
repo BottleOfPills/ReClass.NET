@@ -459,7 +459,13 @@
     <Compile Include="Nodes\BaseMatrixNode.cs" />
     <Compile Include="Nodes\BitFieldNode.cs" />
     <Compile Include="Nodes\ClassInstanceNode.cs" />
+    <Compile Include="Nodes\DoubleMatrix3x3Node.cs" />
+    <Compile Include="Nodes\DoubleMatrix3x4Node.cs" />
+    <Compile Include="Nodes\DoubleMatrix4x4Node.cs" />
     <Compile Include="Nodes\DoubleNode.cs" />
+    <Compile Include="Nodes\DoubleVector2Node.cs" />
+    <Compile Include="Nodes\DoubleVector3Node.cs" />
+    <Compile Include="Nodes\DoubleVector4Node.cs" />
     <Compile Include="Nodes\FloatNode.cs" />
     <Compile Include="Nodes\FunctionPtrNode.cs" />
     <Compile Include="Nodes\Int16Node.cs" />

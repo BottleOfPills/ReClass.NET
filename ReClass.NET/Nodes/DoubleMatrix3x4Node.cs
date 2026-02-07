@@ -7,43 +7,43 @@ using ReClassNET.UI;
 
 namespace ReClassNET.Nodes
 {
-	public class Vector4Node : BaseMatrixNode
+	public class DoubleMatrix3x4Node : BaseMatrixNode
 	{
-		public override int ValueTypeSize => sizeof(float);
+		public override int ValueTypeSize => sizeof(double);
 
-		public override int MemorySize => 4 * ValueTypeSize;
+		public override int MemorySize => 12 * ValueTypeSize;
 
 		public override void GetUserInterfaceInfo(out string name, out Image icon)
 		{
-			name = "Vector4";
-			icon = Properties.Resources.B16x16_Button_Vector_4;
+			name = "Double Matrix 3x4";
+			icon = Properties.Resources.B16x16_Button_Matrix_3x4;
 		}
 
 		public override Size Draw(DrawContext context, int x2, int y2)
 		{
-			return DrawVectorType(context, x2, y2, "Vector4", 4);
+			return DrawMatrixType(context, x2, y2, "Double Matrix (3x4)", 3, 4);
 		}
 
 		protected override int CalculateValuesHeight(DrawContext context)
 		{
-			return 0;
+			return 3 * context.Font.Height;
 		}
 
 		public override void Update(HotSpot spot)
 		{
 			base.Update(spot);
 
-			Update(spot, 4);
+			Update(spot, 12);
 		}
 
 		protected override double ReadValueFromMemory(MemoryBuffer memory, int offset)
 		{
-			return memory.ReadFloat(offset);
+			return memory.ReadDouble(offset);
 		}
 
 		protected override void WriteValueToMemory(RemoteProcess process, IntPtr address, double value)
 		{
-			process.WriteRemoteMemory(address, (float)value);
+			process.WriteRemoteMemory(address, value);
 		}
 	}
 }

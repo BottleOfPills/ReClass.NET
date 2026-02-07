@@ -1,5 +1,8 @@
+using System;
 using System.Drawing;
 using ReClassNET.Controls;
+using ReClassNET.Extensions;
+using ReClassNET.Memory;
 using ReClassNET.UI;
 
 namespace ReClassNET.Nodes
@@ -31,6 +34,16 @@ namespace ReClassNET.Nodes
 			base.Update(spot);
 
 			Update(spot, 3);
+		}
+
+		protected override double ReadValueFromMemory(MemoryBuffer memory, int offset)
+		{
+			return memory.ReadFloat(offset);
+		}
+
+		protected override void WriteValueToMemory(RemoteProcess process, IntPtr address, double value)
+		{
+			process.WriteRemoteMemory(address, (float)value);
 		}
 	}
 }
