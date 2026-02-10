@@ -13,7 +13,7 @@ namespace ReClassNET.DataExchange.ReClass
 {
 	public class ReClassFile : IReClassImport
 	{
-		public const string FormatName = "ReClass File";
+		public const string FormatName = "Legacy Export File";
 		public const string FileExtension = ".reclass";
 
 		private readonly ReClassNetProject project;

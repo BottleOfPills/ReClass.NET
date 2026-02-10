@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using ReClassNET.Controls;
 using ReClassNET.Extensions;
+using ReClassNET.Memory;
 using ReClassNET.UI;
 
 namespace ReClassNET.Nodes
@@ -18,6 +19,9 @@ namespace ReClassNET.Nodes
 		}
 
 		protected delegate void DrawMatrixValues(int x, ref int maxX, ref int y);
+
+		protected abstract double ReadValueFromMemory(MemoryBuffer memory, int offset);
+		protected abstract void WriteValueToMemory(RemoteProcess process, IntPtr address, double value);
 
 		protected Size DrawMatrixType(DrawContext context, int x, int y, string type, int rows, int columns)
 		{
@@ -69,7 +73,7 @@ namespace ReClassNET.Nodes
 
 					for (var column = 0; column < columns; ++column)
 					{
-						var value = context.Memory.ReadFloat(Offset + index * sizeof(float));
+						var value = ReadValueFromMemory(context.Memory, Offset + index * ValueTypeSize);
 						x2 = AddText(context, x2, y, context.Settings.ValueColor, index, $"{value,14:0.000}");
 
 						index++;
@@ -119,7 +123,7 @@ namespace ReClassNET.Nodes
 				x = AddText(context, x, y, context.Settings.NameColor, HotSpot.NoneId, "(");
 				for (var column = 0; column < columns; ++column)
 				{
-					var value = context.Memory.ReadFloat(Offset + column * sizeof(float));
+					var value = ReadValueFromMemory(context.Memory, Offset + column * ValueTypeSize);
 
 					x = AddText(context, x, y, context.Settings.ValueColor, column, $"{value:0.000}");
 
@@ -166,9 +170,9 @@ namespace ReClassNET.Nodes
 
 			if (spot.Id >= 0 && spot.Id < max)
 			{
-				if (float.TryParse(spot.Text, out var val))
+				if (double.TryParse(spot.Text, out var val))
 				{
-					spot.Process.WriteRemoteMemory(spot.Address + spot.Id * ValueTypeSize, val);
+					WriteValueToMemory(spot.Process, spot.Address + spot.Id * ValueTypeSize, val);
 				}
 			}
 		}

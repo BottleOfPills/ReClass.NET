@@ -6,7 +6,7 @@ namespace ReClassNET.Forms
 	{
 		public IconForm()
 		{
-			Icon = Properties.Resources.ReClassNet;
+			// Icon = Properties.Resources.ReClassNet;
 		}
 	}
 }

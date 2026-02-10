@@ -13,7 +13,7 @@ namespace ReClassNET.DataExchange.ReClass
 {
 	public class ReClassQtFile : IReClassImport
 	{
-		public const string FormatName = "ReClassQt File";
+		public const string FormatName = "Qt Export File";
 		public const string FileExtension = ".reclassqt";
 
 		private readonly Type[] typeMap = {
